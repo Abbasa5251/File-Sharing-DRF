@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% block content %}{% endblock content %}
+    <div class="container mx-auto">
+        {% block content %}{% endblock content %}
+    </div>
     <script src="{% static 'js/filepond.js' %}"></script>
     <script src="{% static 'js/filepond.min.js' %}"></script>
     {% block script %}{% endblock script %}

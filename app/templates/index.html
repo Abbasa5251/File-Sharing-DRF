@@ -5,14 +5,11 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="container mx-auto">
-        <input type="file" id="filepond" name="filepond">
+    <input type="file" id="filepond" name="filepond">
+
+    <button class="text-lg font-semibold bg-blue-500 text-blue-50 px-4 py-2 rounded opacity-50 cursor-not-allowed" id="upload_btn" disabled=true>Upload files</button>
     
-        <button class="text-lg font-semibold bg-blue-500 text-blue-50 px-4 py-2 rounded opacity-50 cursor-not-allowed" id="upload_btn" disabled=true>Upload files</button>
-        
-        <span id="download_btn"></span>
-    </div>
-    
+    <span id="download_btn"></span>
 {% endblock content %}
 
 {% block script %}
