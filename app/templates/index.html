@@ -1,0 +1,66 @@
+{% include 'base.html' %}
+
+{% block title %}
+    <title>ADev - File Sharing</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container mx-auto">
+        <input type="file" id="filepond" name="filepond">
+    
+        <button class="text-lg font-semibold bg-blue-500 text-blue-50 px-4 py-2 rounded opacity-50 cursor-not-allowed" id="upload_btn" disabled=true>Upload files</button>
+        
+        <span id="download_btn"></span>
+    </div>
+    
+{% endblock content %}
+
+{% block script %}
+    <script>
+        const upload_btn = document.querySelector("#upload_btn");
+        const download_btn = document.querySelector("#download_btn");
+        const file_input = document.querySelector("#filepond");
+        const pond = FilePond.create(file_input)
+
+        pond.setOptions({
+            allowMultiple: true,
+        })
+
+        pond.onaddfile = () => {
+            upload_btn.disabled = false;
+            upload_btn.classList.remove("opacity-50", "cursor-not-allowed")
+        }
+
+        pond.onremovefile = () => {
+            const files = pond.getFiles()
+            if (files.length === 0) {
+                upload_btn.disabled = true
+                upload_btn.classList.add("opacity-50", "cursor-not-allowed")
+            }
+        }
+    
+        upload_btn.onclick = () => {
+            const files = pond.getFiles()
+
+            const formdata = new FormData()
+
+            for(let i=0; i< files.length; i++) {
+                console.log(files[i].filename)
+                formdata.append('files', files[i].file)
+            }
+
+            fetch('/handle/', {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                },
+                body: formdata,
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+                download_btn.innerHTML = `<a href="/download/${res.folder}">Download Link</a>`;
+            })
+        }
+    </script>
+{% endblock script %}
