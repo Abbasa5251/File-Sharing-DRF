@@ -1,0 +1,9 @@
+{% include 'base.html' %}
+
+{% block title %}
+    <title>Download Files - ADev - File Sharing</title>
+{% endblock title %}
+
+{% block content %}
+    <a href="/media/zip/{{ folder_name }}.zip" download>Download</a>
+{% endblock content %}
