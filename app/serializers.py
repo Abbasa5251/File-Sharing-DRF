@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Folder, File
 from .utils import zip_files
+
 class FileListSerializer(serializers.Serializer):
     files = serializers.ListField(child=serializers.FileField(max_length=124000, allow_empty_file=False, use_url=False))
     folder = serializers.CharField(max_length=256, read_only=True)
